@@ -139,14 +139,30 @@ class Agent:
 
 agent1 = Agent(250, 60, (200, 30, 30))
 agent2 = Agent(750, 60, (30, 30, 200))
-print(len(agent1.Q))
+
+
+use_save = True
+
+if use_save:
+    with open('saved/ag1.txt', 'r') as file:
+        ag1 = file.read()
+    agent1.Q = eval(ag1)
+
+    with open('saved/ag2.txt', 'r') as file:
+        ag2 = file.read()
+    agent2.Q = eval(ag2)
+
+    agent1.epsilon = 0.05
+    agent2.epsilon = 0.05
+
+
 def save(file, dict):
     f = open(file, 'wt')
     f.write(str(dict))
     f.close()
 
-save('ag1.json', agent1.Q)
-save('ag2.json', agent2.Q)
+save('ag1.txt', agent1.Q)
+save('ag2.txt', agent2.Q)
 
 def floor(a, b = 0):
     return round(a-0.5, b)
@@ -239,8 +255,8 @@ class Window(arcade.Window):
         self.episode += 1
         self.frame = 0
 
-        save('ag1.json', agent1.Q)
-        save('ag2.json', agent2.Q)
+        save('ag1.txt', agent1.Q)
+        save('ag2.txt', agent2.Q)
 
 window = Window(1000, 600, 'RL Agents')
 arcade.run()
